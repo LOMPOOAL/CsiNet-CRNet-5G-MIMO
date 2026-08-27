@@ -1,0 +1,14 @@
+RESULTATS DES EXPERIENCES
+========================================
+Date: 23-Aug-2026 08:40:50
+========================================
+
+CsiNet:
+  gamma=1/4: NMSE=-13.85 dB
+  gamma=1/8: NMSE=-15.70 dB
+  gamma=1/16: NMSE=-15.42 dB
+
+CRNet:
+  gamma=1/4: NMSE=-16.69 dB
+  gamma=1/8: NMSE=-17.00 dB
+  gamma=1/16: NMSE=-17.14 dB
