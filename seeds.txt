@@ -1,0 +1,9 @@
+GRAINES ALÉATOIRES UTILISÉES
+========================================
+Run 1 : 12345
+Run 2 : 67890
+Run 3 : 13579
+Run 4 : 24680
+Run 5 : 97531
+========================================
+Graine pour la génération des données : 12345
