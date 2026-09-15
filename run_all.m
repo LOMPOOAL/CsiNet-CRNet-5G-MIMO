@@ -31,45 +31,19 @@ switch mode
         fprintf('============================================\n');
 
         if ~exist(cfg.outputData, 'file')
-
             error( ...
                 'Dataset absent : %s', ...
                 cfg.outputData);
-
         end
 
-        S = load( ...
-            cfg.outputData, ...
-            'data');
+        S = load(cfg.outputData, 'data');
 
         if ~isfield(S, 'data')
-
             error( ...
                 'La variable "data" est absente du dataset.');
-
         end
 
         data = S.data;
-
-        requiredFields = { ...
-            'XTrain', ...
-            'XVal', ...
-            'XTest', ...
-            'YTrain', ...
-            'YVal', ...
-            'YTest'};
-
-        for i = 1:numel(requiredFields)
-
-            if ~isfield(data, requiredFields{i})
-
-                error( ...
-                    'Champ data.%s absent.', ...
-                    requiredFields{i});
-
-            end
-
-        end
 
         fprintf('\nDimensions :\n');
 
@@ -154,30 +128,18 @@ switch mode
         fprintf('============================================\n');
 
         if ~exist(cfg.outputData, 'file')
-
             error( ...
                 ['Dataset absent. Executez ', ...
                  'run_all("generate") d abord.']);
-
         end
 
-        S = load( ...
-            cfg.outputData, ...
-            'data');
-
-        if ~isfield(S, 'data')
-
-            error( ...
-                'La variable "data" est absente du dataset.');
-
-        end
+        S = load(cfg.outputData, 'data');
 
         data = S.data;
 
         for i = 1:numel(cfg.gammaValues)
 
             gamma = cfg.gammaValues(i);
-
             k = cfg.latentDimensions(i);
 
             fprintf('\n');
@@ -208,10 +170,8 @@ switch mode
                     cfg, ...
                     1);
 
-            modelDir = fileparts(cfg.outputData);
-
             modelDir = fullfile( ...
-                fileparts(modelDir), ...
+                fileparts(fileparts(cfg.outputData)), ...
                 '03_models');
 
             if ~exist(modelDir, 'dir')
@@ -236,13 +196,9 @@ switch mode
                 'resultCRNet', ...
                 '-v7.3');
 
-            fprintf('\nModeles sauvegardes pour gamma %.4f\n', ...
-                gamma);
-
         end
 
-        fprintf('\n');
-        fprintf('Entrainement termine.\n');
+        fprintf('\nEntrainement termine.\n');
 
 
     case "quantization"
@@ -256,11 +212,6 @@ switch mode
 
 
     case "all"
-
-        fprintf('\n');
-        fprintf('============================================\n');
-        fprintf(' PIPELINE COMPLET\n');
-        fprintf('============================================\n');
 
         run_all("check");
 
