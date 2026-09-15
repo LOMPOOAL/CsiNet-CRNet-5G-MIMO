@@ -1,0 +1,73 @@
+function result = evaluate_model(net,XTest,YTest,cfg)
+
+if isa(YTest,"dlarray")
+    YTest = extractdata(YTest);
+end
+
+YTest = gather(YTest);
+
+fprintf('\nDimensions evaluation :\n');
+
+fprintf('YTest : %s\n', ...
+    mat2str(size(YTest)));
+
+Yhat = predict(net,XTest);
+
+if isa(Yhat,"dlarray")
+    Yhat = extractdata(Yhat);
+end
+
+Yhat = gather(Yhat);
+
+fprintf('Yhat  : %s\n', ...
+    mat2str(size(Yhat)));
+
+assert( ...
+    isequal(size(Yhat),size(YTest)), ...
+    'Yhat et YTest ont des dimensions differentes.');
+
+err = Yhat - YTest;
+
+mseValue = mean(err(:).^2);
+
+rmseValue = sqrt(mseValue);
+
+powerValue = mean(YTest(:).^2);
+
+nmseLinear = ...
+    sum(err(:).^2) / ...
+    sum(YTest(:).^2);
+
+nmseDb = 10*log10(nmseLinear);
+
+result = table( ...
+    mseValue, ...
+    rmseValue, ...
+    powerValue, ...
+    nmseLinear, ...
+    nmseDb, ...
+    'VariableNames', ...
+    {'MSE', ...
+     'RMSE', ...
+     'PowerReference', ...
+     'NMSE_Linear', ...
+     'NMSE_dB'});
+
+fprintf('\n');
+
+fprintf('MSE              = %.8e\n', ...
+    mseValue);
+
+fprintf('RMSE             = %.8f\n', ...
+    rmseValue);
+
+fprintf('Power reference  = %.8f\n', ...
+    powerValue);
+
+fprintf('NMSE lineaire    = %.8f\n', ...
+    nmseLinear);
+
+fprintf('NMSE dB          = %.4f dB\n', ...
+    nmseDb);
+
+end
